@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-25T16:50:04.051Z</updated>
+  <updated>2017-11-26T05:17:57.576Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,19 +21,11 @@
     <link href="http://yoursite.com/2017/11/26/Impala-Complex-Types/"/>
     <id>http://yoursite.com/2017/11/26/Impala-Complex-Types/</id>
     <published>2017-11-25T16:48:08.000Z</published>
-    <updated>2017-11-25T16:50:04.051Z</updated>
+    <updated>2017-11-26T05:17:57.576Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;impala不支持直接insert complex type data,需要从hive中或者从parquet file中取出来.而且需要使用parquet格式的表.&lt;br&gt;官方文档如下:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Because the Impala
-        
-      
+      Impala complex types (map,array,struct等类型)的使用，在学习过程中遇到了很多坑。文章里是从建表到导数据到取数据的完整流程的demo。
     
     </summary>
     
@@ -49,18 +41,11 @@
     <link href="http://yoursite.com/2017/11/24/git-notes/"/>
     <id>http://yoursite.com/2017/11/24/git-notes/</id>
     <published>2017-11-24T10:16:53.000Z</published>
-    <updated>2017-11-25T13:41:02.390Z</updated>
+    <updated>2017-11-26T05:14:29.120Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h3 id=&quot;其他命令&quot;&gt;&lt;a href=&quot;#其他命令&quot; class=&quot;headerlink&quot; title=&quot;其他命令&quot;&gt;&lt;/a&gt;其他命令&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;* git init    在当前路径下初始化创建一个repository
-* git config
-        
-      
+      git的基本命令，学习过程中的记录
     
     </summary>
     
