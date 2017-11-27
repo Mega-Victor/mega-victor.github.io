@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-27T03:05:48.090Z</updated>
+  <updated>2017-11-27T10:05:21.709Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>摇滚客 | 蠢货王尼玛其人</title>
+    <link href="http://yoursite.com/2017/11/27/%E6%91%87%E6%BB%9A%E5%AE%A2%20%7C%20%E8%A0%A2%E8%B4%A7%E7%8E%8B%E5%B0%BC%E7%8E%9B%E5%85%B6%E4%BA%BA/"/>
+    <id>http://yoursite.com/2017/11/27/摇滚客 | 蠢货王尼玛其人/</id>
+    <published>2017-11-27T10:16:53.000Z</published>
+    <updated>2017-11-27T10:05:21.709Z</updated>
+    
+    <summary type="html">
+    
+      一个叫王尼玛的大头死变态，摘下了头套，活像一个“蠢货”。作为一个知名脱口秀主持人，作为一个一千六百万粉丝的微博大V，竟然想不开去干愤青的事。一面势单力薄地挑战不可能战胜的巨兽，一面发了疯似的煽动年轻人和他一起反抗，你说他蠢不蠢？
+    
+    </summary>
+    
+      <category term="和谐社会" scheme="http://yoursite.com/categories/%E5%92%8C%E8%B0%90%E7%A4%BE%E4%BC%9A/"/>
+    
+    
+      <category term="和谐社会" scheme="http://yoursite.com/tags/%E5%92%8C%E8%B0%90%E7%A4%BE%E4%BC%9A/"/>
+    
+  </entry>
   
   <entry>
     <title>HDFS 文件数量，大小统计</title>
