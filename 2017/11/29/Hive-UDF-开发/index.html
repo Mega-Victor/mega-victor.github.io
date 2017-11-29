@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="诵书置物">
 <meta property="og:description" content="Hive UDF是如何进行开发的,通过一个简单的需求来完成一个UDF的开发,并最终进行Hive上测试">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-29T09:17:30.568Z">
+<meta property="og:updated_time" content="2017-11-29T09:20:47.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive UDF 开发">
 <meta name="twitter:description" content="Hive UDF是如何进行开发的,通过一个简单的需求来完成一个UDF的开发,并最终进行Hive上测试">
@@ -327,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/大数据-OLAP/" itemprop="url" rel="index">
-                    <span itemprop="name">大数据 OLAP</span>
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
                   </a>
                 </span>
 
@@ -390,16 +390,16 @@
       
 
       
-        <p>####何为UDF?<br>这个大家肯定已经都知道了,就是user defined function,当Hive内置函数不能满足你的业务需求的时候,就可以自己写一个UDF进行处理</p>
-<p>####需求<br>需要把Hive表中含map格式的数据导入到impala中,在impala中使用map格式数据. 但是由于impala中取map格式数据的方式比较奇葩,无法进行map中的多个key进行group by. 同时为了方便拉取数据,所以暂时需要把hive中map转成json string 拉到impala中,然后再对json string进行解析.</p>
-<p>####UDF编写过程<br>1.自定义一个Java类 </p>
+        <h4 id="何为UDF"><a href="#何为UDF" class="headerlink" title="何为UDF?"></a>何为UDF?</h4><p>这个大家肯定已经都知道了,就是user defined function,当Hive内置函数不能满足你的业务需求的时候,就可以自己写一个UDF进行处理</p>
+<h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><p>需要把Hive表中含map格式的数据导入到impala中,在impala中使用map格式数据. 但是由于impala中取map格式数据的方式比较奇葩,无法进行map中的多个key进行group by. 同时为了方便拉取数据,所以暂时需要把hive中map转成json string 拉到impala中,然后再对json string进行解析.</p>
+<h4 id="UDF编写过程"><a href="#UDF编写过程" class="headerlink" title="UDF编写过程"></a>UDF编写过程</h4><p>1.自定义一个Java类 </p>
 <p>2.继承UDF类 </p>
 <p>3.重写evaluate方法 </p>
 <p>4.打成jar包 </p>
 <p>5.在hive执行add jar方法 </p>
 <p>6.在hive执行创建模板函数 </p>
 <p>7.hql中使用</p>
-<p>####完整代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">package com.datacube.hive.udf;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Collections;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">import org.apache.hadoop.hive.ql.exec.Description;</span><br><span class="line">import org.apache.hadoop.hive.ql.exec.UDF;</span><br><span class="line"></span><br><span class="line">@Description(name = &quot;to_string&quot;,</span><br><span class="line">        value = &quot;_FUNC_(map) - Change map to String &quot;)</span><br><span class="line">public class MapToString extends UDF&#123;</span><br><span class="line">        public String evaluate(Map&lt;String, String&gt; a) &#123;</span><br><span class="line">            if (a == null) &#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                ArrayList&lt;String&gt; r = new ArrayList&lt;String&gt;(a.size());</span><br><span class="line">                for (Map.Entry&lt;String, String&gt; entry : a.entrySet()) &#123;</span><br><span class="line">                    r.add(&quot;\&quot;&quot;+entry.getKey()+&quot;\&quot;&quot; + &quot;:&quot; + &quot;\&quot;&quot;+entry.getValue()+&quot;\&quot;&quot;  + &quot;,&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">                //Collections.sort(r);</span><br><span class="line"></span><br><span class="line">                StringBuilder sb = new StringBuilder();</span><br><span class="line">                for (int i = 0; i &lt; r.size(); i++) &#123;</span><br><span class="line">                    sb.append(r.get(i));</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">                sb.deleteCharAt(sb.length() - 1);</span><br><span class="line">                sb.insert(0,&quot;&#123;&quot;);</span><br><span class="line">                sb.insert(sb.length(),&quot;&#125;&quot;);</span><br><span class="line"></span><br><span class="line">                return sb.toString();</span><br><span class="line">            &#125;catch (Exception e)&#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Map&lt;String,String&gt; map =new HashMap&lt;String, String&gt;();</span><br><span class="line">        map.put(&quot;name&quot;,&quot;xiaoming&quot;);</span><br><span class="line">        map.put(&quot;age&quot;,&quot;18&quot;);</span><br><span class="line">        System.out.println(new MapToString().evaluate(map));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">package com.datacube.hive.udf;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Collections;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">import org.apache.hadoop.hive.ql.exec.Description;</span><br><span class="line">import org.apache.hadoop.hive.ql.exec.UDF;</span><br><span class="line"></span><br><span class="line">@Description(name = &quot;to_string&quot;,</span><br><span class="line">        value = &quot;_FUNC_(map) - Change map to String &quot;)</span><br><span class="line">public class MapToString extends UDF&#123;</span><br><span class="line">        public String evaluate(Map&lt;String, String&gt; a) &#123;</span><br><span class="line">            if (a == null) &#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                ArrayList&lt;String&gt; r = new ArrayList&lt;String&gt;(a.size());</span><br><span class="line">                for (Map.Entry&lt;String, String&gt; entry : a.entrySet()) &#123;</span><br><span class="line">                    r.add(&quot;\&quot;&quot;+entry.getKey()+&quot;\&quot;&quot; + &quot;:&quot; + &quot;\&quot;&quot;+entry.getValue()+&quot;\&quot;&quot;  + &quot;,&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">                //Collections.sort(r);</span><br><span class="line"></span><br><span class="line">                StringBuilder sb = new StringBuilder();</span><br><span class="line">                for (int i = 0; i &lt; r.size(); i++) &#123;</span><br><span class="line">                    sb.append(r.get(i));</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">                sb.deleteCharAt(sb.length() - 1);</span><br><span class="line">                sb.insert(0,&quot;&#123;&quot;);</span><br><span class="line">                sb.insert(sb.length(),&quot;&#125;&quot;);</span><br><span class="line"></span><br><span class="line">                return sb.toString();</span><br><span class="line">            &#125;catch (Exception e)&#123;</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Map&lt;String,String&gt; map =new HashMap&lt;String, String&gt;();</span><br><span class="line">        map.put(&quot;name&quot;,&quot;xiaoming&quot;);</span><br><span class="line">        map.put(&quot;age&quot;,&quot;18&quot;);</span><br><span class="line">        System.out.println(new MapToString().evaluate(map));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>下面是json string 的解析 写了两种方式,但是效率都不太高</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">package com.datacube.hive.udf;</span><br><span class="line">import org.apache.hadoop.hive.ql.exec.Description;</span><br><span class="line">import org.apache.hadoop.hive.ql.exec.UDF;</span><br><span class="line">import org.apache.hadoop.io.Text;</span><br><span class="line"></span><br><span class="line">@Description(name = &quot;map_filter&quot;,</span><br><span class="line">        value = &quot;_FUNC_(string) - Get the Value of the Key  &quot;)</span><br><span class="line">public class MapFilter extends UDF &#123;</span><br><span class="line">    public String evaluate(Text s, String target) &#123;</span><br><span class="line"></span><br><span class="line">        if (s == null || target == null) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        String[] kvPairs = s.toString().replace(&quot;\&quot;&quot;, &quot;&quot;).replace(&quot;&#125;&quot;,&quot;&quot;).replace(&quot;&#123;&quot;,&quot;&quot;).split(&quot;,&quot;);</span><br><span class="line">        try &#123;</span><br><span class="line">            String targetValue = null;</span><br><span class="line">            for (String kvPair : kvPairs) &#123;</span><br><span class="line">                String[] kv = kvPair.split(&quot;:&quot;);</span><br><span class="line">                String key = kv[0];</span><br><span class="line">                String value = kv[1];</span><br><span class="line"></span><br><span class="line">                if (key.equals(target)) &#123;</span><br><span class="line">                    targetValue=value;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return targetValue;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        String aa  =  &quot;&#123;\&quot;rid\&quot;:\&quot;1511321168403\&quot;,\&quot;column\&quot;:\&quot;头条\&quot;,\&quot;RCC\&quot;:\&quot;D3RFE69O0001875P\&quot;,\&quot;type\&quot;:\&quot;doc\&quot;,\&quot;offset\&quot;:\&quot;2\&quot;&#125;&quot;;</span><br><span class="line">        System.out.println(new MapFilter().evaluate(new Text(aa),&quot;column&quot;));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>另一种解析方式是用的Gson</p>
@@ -507,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -538,7 +547,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -593,6 +602,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#何为UDF"><span class="nav-number">1.</span> <span class="nav-text">何为UDF?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UDF编写过程"><span class="nav-number">3.</span> <span class="nav-text">UDF编写过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完整代码"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
