@@ -12,17 +12,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hbase 上传CSV文件]]></title>
-    <url>%2F2017%2F11%2F29%2F%E6%8A%8Acsv%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0hdfs%20%2F</url>
-    <content type="text"><![CDATA[把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create 'table','col1','col2' ####使用importtsv命令上传 1./hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,col1，col2 '-Dimporttsv.separator=,' table /data/file.csv 以上命令要把csv文件的第一列作为row，剩下的作为列族。]]></content>
-      <categories>
-        <category>大数据</category>
-      </categories>
-      <tags>
-        <tag>Hbase</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Ubuntu 下提示/boot空间不足解决办法]]></title>
     <url>%2F2017%2F11%2F29%2FUbuntu%20%3Aboot%20%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%2F</url>
     <content type="text"><![CDATA[查看当前内核1uname -a 查看内核12dpkg --get-selections|grep linuxlinux-后面带image的是旧的内核 清除不使用的内核123sudo apt-get autoremove linux-image-(版本号)或者sudo apt-get remove linux-image-(版本号)（就是上面带image的版本） 清理残留数据1dpkg -l |grep ^rc|awk '&#123;print $2&#125;' |sudo xargs dpkg -P]]></content>
@@ -31,6 +20,17 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hbase 上传CSV文件]]></title>
+    <url>%2F2017%2F11%2F29%2F%E6%8A%8Acsv%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0hdfs%20%2F</url>
+    <content type="text"><![CDATA[把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create 'table','col1','col2' ####使用importtsv命令上传 1./hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,col1，col2 '-Dimporttsv.separator=,' table /data/file.csv 以上命令要把csv文件的第一列作为row，剩下的作为列族。]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+      <tags>
+        <tag>Hbase</tag>
       </tags>
   </entry>
   <entry>
