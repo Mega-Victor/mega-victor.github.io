@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create &amp;apos;table&amp;apos;,&amp;apos;col1&amp;apos;,&amp;apos;col2&amp;">
+<meta name="description" content="把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create &apos;table&apos;,&apos;col1&apos;,&apos;col2&apos; ####使用importtsv命令上">
 <meta name="keywords" content="Hbase">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hbase 上传CSV文件">
 <meta property="og:url" content="http://yoursite.com/2017/11/29/把csv文件上传到hdfs /index.html">
 <meta property="og:site_name" content="诵书置物">
-<meta property="og:description" content="把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create &amp;apos;table&amp;apos;,&amp;apos;col1&amp;apos;,&amp;apos;col2&amp;apos; ####使用importtsv命令上传 1./hbase org.apache.hadoop.hbase.mapre">
+<meta property="og:description" content="把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create &apos;table&apos;,&apos;col1&apos;,&apos;col2&apos; ####使用importtsv命令上传 1./hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.col">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-29T09:32:12.092Z">
+<meta property="og:updated_time" content="2017-11-30T11:16:41.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hbase 上传CSV文件">
-<meta name="twitter:description" content="把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create &amp;apos;table&amp;apos;,&amp;apos;col1&amp;apos;,&amp;apos;col2&amp;apos; ####使用importtsv命令上传 1./hbase org.apache.hadoop.hbase.mapre">
+<meta name="twitter:description" content="把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create &apos;table&apos;,&apos;col1&apos;,&apos;col2&apos; ####使用importtsv命令上传 1./hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.col">
 
 
 
@@ -386,10 +386,10 @@
       
 
       
-        <h4 id="把csv文件上传到hdfs"><a href="#把csv文件上传到hdfs" class="headerlink" title="把csv文件上传到hdfs"></a>把csv文件上传到hdfs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir /data</span><br><span class="line">hadoop fs -put file.csv /data</span><br></pre></td></tr></table></figure>
-<h4 id="hbase-shell-新建表"><a href="#hbase-shell-新建表" class="headerlink" title="hbase shell 新建表"></a>hbase shell 新建表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create &apos;table&apos;,&apos;col1&apos;,&apos;col2&apos;</span><br></pre></td></tr></table></figure>
+        <h4 id="把csv文件上传到hdfs"><a href="#把csv文件上传到hdfs" class="headerlink" title="把csv文件上传到hdfs"></a>把csv文件上传到hdfs</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir /data</span><br><span class="line">hadoop fs -put file.csv /data</span><br></pre></td></tr></table></figure>
+<h4 id="hbase-shell-新建表"><a href="#hbase-shell-新建表" class="headerlink" title="hbase shell 新建表"></a>hbase shell 新建表</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create <span class="string">'table'</span>,<span class="string">'col1'</span>,<span class="string">'col2'</span></span><br></pre></td></tr></table></figure>
 <p>####使用importtsv命令上传</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,col1，col2 &apos;-Dimporttsv.separator=,&apos; table /data/file.csv</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,col1，col2 <span class="string">'-Dimporttsv.separator=,'</span> table /data/file.csv</span><br></pre></td></tr></table></figure>
 <p>以上命令要把csv文件的第一列作为row，剩下的作为列族。</p>
 
       
