@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[maven dubbo-2.8.4导入教程]]></title>
+    <url>%2F2017%2F12%2F07%2Fmaven%20dubbo-2.8.4%E5%AF%BC%E5%85%A5%E6%95%99%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[maven中心库没有dubbo2.8.4,需要自己编译。我已经编译好了jar包 安装dubbo-2.8.4.jar包到maven仓库中如下操作： 1mvn install:install-file -Dfile=/Users/username/Downloads/dubbo-2.8.4.jar -DgroupId=com.alibaba -DartifactId=dubbo -Dversion=2.8.4 -Dpackaging=jar -DgeneratePom=true 需要dubbo-2.8.4.jar的联系我的邮箱就可以, 相信你会找到我的邮箱的]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Impala 上传本地数据]]></title>
     <url>%2F2017%2F11%2F30%2FImpala%20%E5%8A%A0%E8%BD%BD%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%2F</url>
     <content type="text"><![CDATA[1. 使用location 方式这种方式下在impala的HDFS的db目录下直接指定一个和表名一样的目录就可以, 注意此目录当前在db目录下是不存在的. 也就是创建表的时候才会创建相应的目录. 说的不太清晰,请看代码就明白了 12345create external table device(group_id string ,device_id string)row format delimited fields terminated by '\t'lines terminated by '\n'location "hdfs://impala/warehouse/portal.db/device/" 注意这里建表是使用的外部表, external, EXTERNAL_TABLE 这样建的表被drop之后HDFS上面的文件依然还是存在的, 否则就是内部表, 删除表的同时HDFS上的文件一起删除了 注意这个/device/本来是不存在的, 创建表的时候才会创建这个目录后面需要加载到表的数据直接上传到这个目录下面就行, 然后再refresh +table name 一下,更新一下数据, 代码如下 123hadoop fs -put id.txt hdfs://impala/warehouse/portal.db/devicerefresh device # 在 impala shell 中进行 2.使用load方式这种方式是可以导入放在任意HDFS路径下的文件, 但是当文件被load的时候是采用的move方式, 也就是剪贴. 1234567# 建表create external table device1(group_id string ,device_id string)row format delimited fields terminated by '\t'lines terminated by '\n'# 加载数据load data inpath "hdfs://impala/tmp/id.txt" into (overwrite) table device 增加分区也可以使用这种方式, 假设我们按照group_id进行分区, 123456789101112# 建表create table device(device_id string)partitioned by (group_id string)row format delimited fields terminated by '\t'lines terminated by '\n'# 加载数据到新的分区# 增加分区数据(这里使用alter 是因为不存在当前分区,是新加的分区)alter table device add partition(dgroup_id="1") location "hdfs://...../id.txt"# 继续load数据到当前分区load data inpath "hdfs://hz-impala1/tmp/id.txt" into table device partition(group_id=1)]]></content>

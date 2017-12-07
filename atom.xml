@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-30T11:15:46.797Z</updated>
+  <updated>2017-12-07T02:51:27.199Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>maven dubbo-2.8.4导入教程</title>
+    <link href="http://yoursite.com/2017/12/07/maven%20dubbo-2.8.4%E5%AF%BC%E5%85%A5%E6%95%99%E7%A8%8B/"/>
+    <id>http://yoursite.com/2017/12/07/maven dubbo-2.8.4导入教程/</id>
+    <published>2017-12-07T02:29:34.000Z</published>
+    <updated>2017-12-07T02:51:27.199Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;maven中心库没有dubbo2.8.4,需要自己编译。&lt;br&gt;我已经编译好了jar包 安装dubbo-2.8.4.jar包到maven仓库中如下操作：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td
+        
+      
+    
+    </summary>
+    
+      <category term="JavaWeb" scheme="http://yoursite.com/categories/JavaWeb/"/>
+    
+    
+      <category term="maven" scheme="http://yoursite.com/tags/maven/"/>
+    
+  </entry>
   
   <entry>
     <title>Impala 上传本地数据</title>
