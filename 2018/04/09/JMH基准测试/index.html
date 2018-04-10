@@ -89,12 +89,10 @@
 <meta property="og:site_name" content="诵书置物">
 <meta property="og:description" content="Measure, don’t guess. 使用JMH进行代码性能基准测试">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/04/09/JMH基准测试/1.png">
-<meta property="og:updated_time" content="2018-04-10T12:53:56.555Z">
+<meta property="og:updated_time" content="2018-04-10T12:56:28.276Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JMH基准测试">
 <meta name="twitter:description" content="Measure, don’t guess. 使用JMH进行代码性能基准测试">
-<meta name="twitter:image" content="http://yoursite.com/2018/04/09/JMH基准测试/1.png">
 
 
 
@@ -425,9 +423,9 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mvn archetype:generate -DinteractiveMode=false -DarchetypeGroupId=org.openjdk.jmh \</span><br><span class="line">      -DarchetypeArtifactId=jmh-java-benchmark-archetype -DarchetypeVersion=1.4.1 \</span><br><span class="line">      -DgroupId=org.agoncal.sample.jmh -DartifactId=test -Dversion=1.0</span><br></pre></td></tr></table></figure>
 <ul>
-<li>进入工程后</li>
+<li>进入工程后 会看到自动生成的这个代码</li>
 </ul>
-<img src="/2018/04/09/JMH基准测试/1.png" title="工程目录">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import org.openjdk.jmh.annotations.Benchmark;</span><br><span class="line"></span><br><span class="line">public class MyBenchmark &#123;</span><br><span class="line"></span><br><span class="line">    @Benchmark</span><br><span class="line">    public void testMethod() &#123;</span><br><span class="line">        // place your benchmarked code here</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在该方法下写代码即可,或者直接运行都能看到效果</p>
 <p>写完后使用maven命令打包就能生成一个benchmarks.jar</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mvn clean install</span><br><span class="line">java -jar target/benchmarks.jar</span><br></pre></td></tr></table></figure>
@@ -522,10 +520,6 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/09/11/" rel="prev" title="JMH基准测试">
-                JMH基准测试 <i class="fa fa-chevron-right"></i>
-              </a>
-            
           </div>
         </div>
       
@@ -615,7 +609,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
