@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[阿里云/腾讯云搭建hadoop namenode未启动]]></title>
+    <url>%2F2018%2F05%2F14%2F%E9%98%BF%E9%87%8C%E4%BA%91%3A%E8%85%BE%E8%AE%AF%E4%BA%91%E6%90%AD%E5%BB%BAhadoop%20namenode%E6%9C%AA%E5%90%AF%E5%8A%A8%2F</url>
+    <content type="text"><![CDATA[腾讯云 阿里云 分别或者混合搭建hadoop 端口占用先排除掉，然后还有错误： FATAL org.apache.hadoop.hdfs.server.namenode.NameNode: Failed to start namenode.java.net.BindException: Problem binding to [master:9000] java.net.BindException: Cannot assign requested address; For more details see: http://wiki.apache.org/hadoop/BindExceptionat sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) 一般出现这个问题是因为网络配置的原因。云主机有自己的内网ip，和外网ip。在配置hosts时，我配置了 123ip1 masterip2 slaver1ip3 slaver3 这里需要特别注意，这个ip你到底应该写什么。一开始我配置的时候在每台服务器中的hosts第一条都加了 127.0.0.1 hostname（每台机器的本机名），这样启动的时候jps命令下各个服务都起来了。但是这样master：9000就绑定在了127.0.0.1：9000上，直接浏览器就无法访问各个ui服务界面了。我发现后就把127.0.0.1 hostname这一条删除了。然后再重启，就一直出现上面的“Problem binding to [master:9000]”错误。把namenode都format好几遍也没用。废了很大力气才发现根本原因是内网 外网ip的问题。 问题是：如果是在master上操作的话ip必须是master 的内网ip 同理slaves上也是一样，自己的主机上的IP要改成内网IP，其他的要用外网IP。比如说在master上，hosts要这么写： 123内网ip master外网ip slaver1外网ip slaver2 关于内网外网ip 内网ip，内网也就是局域网，内网的计算机以NAT（网络地址转换）协议，通过一个公共的网关访问Internet。内网的计算机可向Internet上的其他计算机发送连接请求，但Internet上其他的计算机无法向内网的计算机发送连接请求。不可以直接用于服务器远程登录，其主要作用是：跟当前帐号下的其他同集群的机器通信。一些小型企业或者学校，通常都是申请一个固定的IP地址，然后通过IP共享（IP Sharing），使用整个公司或学校的机器都能够访问互联网。而这些企业或学校的机器使用的IP地址就是内网IP，内网IP是在规划IPv4协议时，考虑到IP地址资源可能不足，就专门为内部网设计私有IP地址（或称之为保留地址），一般常用内网IP地址都是这种形式的：10.X.X.X、 172.16.X.X-172.31.X.X、192.168.X.X等。需要注意的是，内网的计算机可向Internet上的其他计算机发送连接请求，但Internet上其他的计算机无法向内网的计算机发送连接请求。 服务器公网ip ，可以用于域名解析ip，服务器远程登录ip，是最主要的服务器ip地址。 公网IP就是除了保留IP地址以外的IP地址，可以与Internet上的其他计算机随意互相访问。我们通常所说的IP地址，其实就是指的公网 IP。互联网上的每台计算机都有一个独立的IP地址，该IP地址唯一确定互联网上的一台计算机。这里的IP地址就是指的公网IP地址。 其实，互联网上的计算机是通过“公网IP＋内网IP”来唯一确定的，就像很多大楼都是201房间一样，房间号可能一样，但是大楼肯定是唯一的。公网IP地址和内网IP地址也是同样，不同企业或学校的机器可能有相同的内网IP地址，但是他们的公网IP地址肯定不同。那么这些企业或学校的计算机是怎样IP地址共享的呢？这就需要使用NAT（Network Address Translation,网络地址转换）功能。当内部计算机要连接互联网时，首先需要通过NAT技术，将内部计算机数据包中有关IP地址的设置都设成NAT主机的公共IP地址，然后再传送到Internet，虽然内部计算机使用的是私有IP地址，但在连接Internet时，就可以通过NAT主机的 NAT技术，将内网我IP地址修改为公网IP地址，如此一来，内网计算机就可以向Internet请求数据了。 此处master的IP对于slaves是公网IP，但是对于master自己应该用内网IP—正真的对应自己的机器的ifconfig。 以上在master，salve1和slave2上都要执行，为了方便，jdk的安装目录最好一样，之后的目录操作也是。]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[服务器免密登录设置]]></title>
+    <url>%2F2018%2F05%2F14%2F%E6%9C%8D%E5%8A%A1%E5%99%A8A%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95B%2F</url>
+    <content type="text"><![CDATA[服务器免密登录设置 服务器A免密登录B A 中生成 ssh-keygen 生成公钥和私钥 ：idrsa idrsa.pub。 确保生成的 idrsa 文件权限是600 idrsa.pub 文件权限是622,否则会在B在验证A是否具有登录B的权限的时候会出错，拒绝登录。 在B中的.ssh下面的authorizedkeys文件中增加A的idrsa.pub 中的key，确保B的 .ssh 文件权限是700，authorized_keys 文件权限是600 更改/etc/ssh/sshd_config 这一步在新的服务器中通常需要做 1234567vi /etc/ssh/sshd_configRSAAuthentication yes # 启用 RSA 认证PubkeyAuthentication yes # 启用公钥私钥配对认证方式AuthorizedKeysFile .ssh/authorized_keys # 公钥文件路径（和上面生成的文件同） 设置完之后记得重启SSH服务，才能使刚才设置有效。 service sshd restart]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[腾讯云主机hosts自动还原]]></title>
+    <url>%2F2018%2F05%2F14%2F%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BAhosts%E8%87%AA%E5%8A%A8%E8%BF%98%E5%8E%9F%2F</url>
+    <content type="text"><![CDATA[腾讯云主机更改hosts之后，重启机器后hosts自动还原问题，这个问题在阿里云的云主机中不会出现，更改时云主机的机制不同。 这问题折腾了一两个小时，主要原因还是自己不够严谨，在更改hosts文件的时候没有好好读给的注释，hosts中的注释内容如下： Your system has configured ‘manage_etc_hosts’ as True. As a result, if you wish for changes to this file to persist then you will need to either a.) make changes to the master file in /etc/cloud/templates/hosts.redhat.tmpl b.) change or remove the value of ‘manage_etc_hosts’ in /etc/cloud/cloud.cfg or cloud-config from user-data 那个 ‘manage_etc_hosts’ 配置没找到，通过更改hosts.redhat.tmpl解决了，这个文件中的内容就是每次自动还原，覆盖你的/etc/hosts 的模板内容，只要把 /etc/cloud/templates/hosts.redhat.tmpl 这个文件内容更改hosts的同时 更改成你想要的内容就行。]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[JMH基准测试]]></title>
     <url>%2F2018%2F04%2F09%2FJMH%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95%2F</url>
     <content type="text"><![CDATA[正如 Kirk Pepperdine 说过的：Measure, don’t guess. 代码性能测试的时候，应该建立一个稳定的性能测试环境（包括操作系统，jvm，应用服务器，数据库等），设置一些性能目标，针对这一目标不断的进行测试，直到达到你的预期。和持续测试、持续交付类似，我们也应该进行持续的性能测试。 我们使用JMH进行实例测试。 算是有两种方式吧 方式一 建立单独的JMH工程测试 建立maven工程 123$ mvn archetype:generate -DinteractiveMode=false -DarchetypeGroupId=org.openjdk.jmh \ -DarchetypeArtifactId=jmh-java-benchmark-archetype -DarchetypeVersion=1.4.1 \ -DgroupId=org.agoncal.sample.jmh -DartifactId=test -Dversion=1.0 进入工程后 会看到自动生成的这个代码 12345678910import org.openjdk.jmh.annotations.Benchmark;public class MyBenchmark &#123; @Benchmark public void testMethod() &#123; // place your benchmarked code here &#125;&#125; 在该方法下写代码即可,或者直接运行都能看到效果 写完后使用maven命令打包就能生成一个benchmarks.jar 12mvn clean installjava -jar target/benchmarks.jar 就能看到类似的结果了 123456789101112# Fork: 1 of 10# Warmup: 20 iterations, 1 s each# Measurement: 20 iterations, 1 s each# Threads: 1 thread, will synchronize iterations# Benchmark mode: Throughput, ops/time# Benchmark: org.sample.MyBenchmark.testMethod# Warmup Iteration 1: 3144380.099 ops/ms# Warmup Iteration 2: 3133745.492 ops/ms# Warmup Iteration 3: 3112635.234 ops/ms# Warmup Iteration 4: 3061073.932 ops/ms# Warmup Iteration 5: 3068514.482 ops/ms# Warmup Iteration 6: 3118373.441 ops/ms 方式二 使用idea-jmh-plugin直接插件中搜索jmh，首先安装好插件重启。然后在任意一个需要测试的java文件下右键，选择generate..,选择生成jmh，就会自动生成一个如下方法： 123@Benchmark public void measureName() &#123; &#125; maven 1234567891011&lt;dependency&gt; &lt;groupId&gt;org.openjdk.jmh&lt;/groupId&gt; &lt;artifactId&gt;jmh-core&lt;/artifactId&gt; &lt;version&gt;1.2.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.openjdk.jmh&lt;/groupId&gt; &lt;artifactId&gt;jmh-generator-annprocess&lt;/artifactId&gt; &lt;version&gt;1.2.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162import java.util.HashMap;import java.util.Map;import com.google.gson.Gson;import org.openjdk.jmh.annotations.Benchmark;import org.openjdk.jmh.annotations.Fork;import org.openjdk.jmh.annotations.Measurement;import org.openjdk.jmh.annotations.Warmup;/** * @author Mega-Victor * @date 2018/4/09 */@OutputTimeUnit(TimeUnit.MILLISECONDS)@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)@Fork(1)public class TestBenchmark &#123; @Benchmark public String measureName() &#123; String s = &quot;&#123;\&quot;duflag\&quot;:\&quot;start\&quot;,\&quot;column\&quot;:\&quot;冷启动\&quot;,\&quot;dtype\&quot;:\&quot;tab\&quot;,\&quot;duid\&quot;:\&quot;1508322526\&quot;,\&quot;name\&quot;:\&quot;tom\&quot;,\&quot;age\&quot;:\&quot;16\&quot;,\&quot;city\&quot;:\&quot;beijing&#125;&quot;; String targetKey = &quot;duflag&quot;; if (s == null || targetKey == null) &#123; return null; &#125; try &#123; Gson gson = new Gson(); Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;(); map = gson.fromJson(s.toString(), map.getClass()); return map.get(targetKey); &#125; catch (Exception e) &#123; return null; &#125; &#125; @Benchmark public String measureName1() &#123; String s = &quot;&#123;\&quot;duflag\&quot;:\&quot;start\&quot;,\&quot;column\&quot;:\&quot;冷启动\&quot;,\&quot;dtype\&quot;:\&quot;tab\&quot;,\&quot;duid\&quot;:\&quot;1508322526\&quot;,\&quot;name\&quot;:\&quot;tom\&quot;,\&quot;age\&quot;:\&quot;16\&quot;,\&quot;city\&quot;:\&quot;beijing&#125;&quot;; String targetKey = &quot;duflag&quot;; if (s == null || targetKey == null) &#123; return null; &#125; String[] kvPairs = s.toString().replace(&quot;\&quot;&quot;, &quot;&quot;).replace(&quot;&#125;&quot;,&quot;&quot;).replace(&quot;&#123;&quot;,&quot;&quot;).split(&quot;,&quot;); try &#123; String targetValue = null; for (String kvPair : kvPairs) &#123; String[] kv = kvPair.split(&quot;:&quot;); String key = kv[0]; String value = kv[1]; if (key.equals(targetKey)) &#123; targetValue=value; &#125; &#125; return targetValue; &#125; catch (Exception e) &#123; return null; &#125; &#125; 和Junit测试一样直接运行代码，然后会看到结果，进行比较就会发现代码之间的性能差异 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869# JMH version: 1.20# VM version: JDK 1.8.0_144, VM 25.144-b01# VM invoker: /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/bin/java# VM options: -Dfile.encoding=UTF-8# Warmup: 5 iterations, 1 s each# Measurement: 5 iterations, 1 s each# Timeout: 10 min per iteration# Threads: 1 thread, will synchronize iterations# Benchmark mode: Throughput, ops/time# Benchmark: DataStructures.StringDemo.measureName# Run progress: 0.00% complete, ETA 00:00:20# Fork: 1 of 1# Warmup Iteration 1: 62.469 ops/ms# Warmup Iteration 2: 98.835 ops/ms# Warmup Iteration 3: 117.189 ops/ms# Warmup Iteration 4: 118.060 ops/ms# Warmup Iteration 5: 117.986 ops/msIteration 1: 116.963 ops/msIteration 2: 117.225 ops/msIteration 3: 118.285 ops/msIteration 4: 119.339 ops/msIteration 5: 125.611 ops/msResult &quot;DataStructures.StringDemo.measureName&quot;: 119.485 ±(99.9%) 13.675 ops/ms [Average] (min, avg, max) = (116.963, 119.485, 125.611), stdev = 3.551 CI (99.9%): [105.809, 133.160] (assumes normal distribution)# JMH version: 1.20# VM version: JDK 1.8.0_144, VM 25.144-b01# VM invoker: /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/bin/java# VM options: -Dfile.encoding=UTF-8# Warmup: 5 iterations, 1 s each# Measurement: 5 iterations, 1 s each# Timeout: 10 min per iteration# Threads: 1 thread, will synchronize iterations# Benchmark mode: Throughput, ops/time# Benchmark: DataStructures.StringDemo.measureName1# Run progress: 50.00% complete, ETA 00:00:10# Fork: 1 of 1# Warmup Iteration 1: 191.825 ops/ms# Warmup Iteration 2: 218.092 ops/ms# Warmup Iteration 3: 251.509 ops/ms# Warmup Iteration 4: 258.351 ops/ms# Warmup Iteration 5: 267.683 ops/msIteration 1: 268.787 ops/msIteration 2: 273.119 ops/msIteration 3: 267.273 ops/msIteration 4: 268.032 ops/msIteration 5: 266.316 ops/msResult &quot;DataStructures.StringDemo.measureName1&quot;: 268.706 ±(99.9%) 10.133 ops/ms [Average] (min, avg, max) = (266.316, 268.706, 273.119), stdev = 2.632 CI (99.9%): [258.572, 278.839] (assumes normal distribution)# Run complete. Total time: 00:00:20**Benchmark Mode Cnt Score Error UnitsDataStructures.StringDemo.measureName thrpt 5 119.485 ± 13.675 ops/msDataStructures.StringDemo.measureName1 thrpt 5 268.706 ± 10.133 ops/ms**Process finished with exit code 0 可以看到以上代码使用Gson和直接手动解析json成map数据两种实现方式，手动解析速度相比更快一点]]></content>
@@ -72,17 +96,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Ubuntu 下提示/boot空间不足解决办法]]></title>
-    <url>%2F2017%2F11%2F29%2FUbuntu%20%3Aboot%20%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%2F</url>
-    <content type="text"><![CDATA[查看当前内核1uname -a 查看内核12dpkg --get-selections|grep linuxlinux-后面带image的是旧的内核 清除不使用的内核123sudo apt-get autoremove linux-image-(版本号)或者sudo apt-get remove linux-image-(版本号)（就是上面带image的版本） 清理残留数据1dpkg -l |grep ^rc|awk '&#123;print $2&#125;' |sudo xargs dpkg -P]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Hbase 上传CSV文件]]></title>
     <url>%2F2017%2F11%2F29%2F%E6%8A%8Acsv%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0hdfs%20%2F</url>
     <content type="text"><![CDATA[把csv文件上传到hdfs12hadoop fs -mkdir /datahadoop fs -put file.csv /data hbase shell 新建表1create 'table','col1','col2' ####使用importtsv命令上传 1./hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,col1，col2 '-Dimporttsv.separator=,' table /data/file.csv 以上命令要把csv文件的第一列作为row，剩下的作为列族。]]></content>
@@ -91,6 +104,17 @@
       </categories>
       <tags>
         <tag>Hbase</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Ubuntu 下提示/boot空间不足解决办法]]></title>
+    <url>%2F2017%2F11%2F29%2FUbuntu%20%3Aboot%20%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%2F</url>
+    <content type="text"><![CDATA[查看当前内核1uname -a 查看内核12dpkg --get-selections|grep linuxlinux-后面带image的是旧的内核 清除不使用的内核123sudo apt-get autoremove linux-image-(版本号)或者sudo apt-get remove linux-image-(版本号)（就是上面带image的版本） 清理残留数据1dpkg -l |grep ^rc|awk '&#123;print $2&#125;' |sudo xargs dpkg -P]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
