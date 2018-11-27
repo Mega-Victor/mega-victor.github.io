@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-14T03:40:16.121Z</updated>
+  <updated>2018-11-27T10:16:44.371Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为啥俺很少看视频？——兼谈“视频”与“文本”在认知心理学方面的差异</title>
+    <link href="http://yoursite.com/2018/11/26/%E5%85%BC%E8%B0%88%E2%80%9C%E8%A7%86%E9%A2%91%E2%80%9D%E4%B8%8E%E2%80%9C%E6%96%87%E6%9C%AC%E2%80%9D%E5%9C%A8%E8%AE%A4%E7%9F%A5%E5%BF%83%E7%90%86%E5%AD%A6%E6%96%B9%E9%9D%A2%E7%9A%84%E5%B7%AE%E5%BC%82/"/>
+    <id>http://yoursite.com/2018/11/26/兼谈“视频”与“文本”在认知心理学方面的差异/</id>
+    <published>2018-11-26T10:16:55.000Z</published>
+    <updated>2018-11-27T10:16:44.371Z</updated>
+    
+    <summary type="html">
+    
+      从心理学的角度讨论视频的缺点，尤其是目前短视频充斥的生活，我们要从心理上改变对视频的认知，然后尽量戒除它。
+    
+    </summary>
+    
+      <category term="心理认知" scheme="http://yoursite.com/categories/%E5%BF%83%E7%90%86%E8%AE%A4%E7%9F%A5/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>从逻辑上分析《九年义务教育五毛培训标准教材》</title>
+    <link href="http://yoursite.com/2018/06/05/%E4%BB%8E%E9%80%BB%E8%BE%91%E4%B8%8A%E5%88%86%E6%9E%90%E3%80%8A%E4%B9%9D%E5%B9%B4%E4%B9%89%E5%8A%A1%E6%95%99%E8%82%B2%E4%BA%94%E6%AF%9B%E5%9F%B9%E8%AE%AD%E6%A0%87%E5%87%86%E6%95%99%E6%9D%90%E3%80%8B/"/>
+    <id>http://yoursite.com/2018/06/05/从逻辑上分析《九年义务教育五毛培训标准教材》/</id>
+    <published>2018-06-05T02:16:53.000Z</published>
+    <updated>2018-06-05T09:40:02.563Z</updated>
+    
+    <summary type="html">
+    
+      根据逻辑学的内容来分析网上的《九年义务教育五毛培训标准教材》内容
+    
+    </summary>
+    
+      <category term="逻辑" scheme="http://yoursite.com/categories/%E9%80%BB%E8%BE%91/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>阿里云/腾讯云搭建hadoop namenode未启动</title>
