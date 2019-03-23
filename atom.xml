@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-27T10:18:41.797Z</updated>
+  <updated>2019-03-23T16:22:53.203Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机术语理解</title>
+    <link href="http://yoursite.com/2019/03/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/"/>
+    <id>http://yoursite.com/2019/03/23/计算机术语理解/</id>
+    <published>2019-03-23T15:16:53.000Z</published>
+    <updated>2019-03-23T16:22:53.203Z</updated>
+    
+    <summary type="html">
+    
+      理解进程 线程 虚拟内存
+    
+    </summary>
+    
+      <category term="计算机基础" scheme="http://yoursite.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>为啥俺很少看视频？——兼谈“视频”与“文本”在认知心理学方面的差异</title>
@@ -346,7 +364,7 @@
     <link href="http://yoursite.com/2017/11/27/HDFS-%E6%96%87%E4%BB%B6%E6%95%B0%E9%87%8F%EF%BC%8C%E5%A4%A7%E5%B0%8F%E7%BB%9F%E8%AE%A1/"/>
     <id>http://yoursite.com/2017/11/27/HDFS-文件数量，大小统计/</id>
     <published>2017-11-27T03:03:48.000Z</published>
-    <updated>2017-11-30T11:18:12.680Z</updated>
+    <updated>2019-03-23T16:08:36.822Z</updated>
     
     <summary type="html">
     
@@ -398,24 +416,6 @@
     
     
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>我做梦穿上了红裙子</title>
-    <link href="http://yoursite.com/2012/08/16/%E6%88%91%E5%81%9A%E6%A2%A6%E7%A9%BF%E4%B8%8A%E4%BA%86%E7%BA%A2%E8%A3%99%E5%AD%90/"/>
-    <id>http://yoursite.com/2012/08/16/我做梦穿上了红裙子/</id>
-    <published>2012-08-16T07:29:34.000Z</published>
-    <updated>2017-12-16T07:32:40.400Z</updated>
-    
-    <summary type="html">
-    
-      与陌生人对话, 或许那个人就是你自己映射出来的
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
     
   </entry>
   
